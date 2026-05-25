@@ -27,7 +27,11 @@ const SECTIONS = [
   { label: "Perkalian (3 digit)", indices: [4, 5] },
 ];
 
-const opColor = { "+": "#60a5fa", "−": "#f472b6", "×": "#a78bfa" };
+const opColor: Record<string, string> = {
+  "+": "#60a5fa",
+  "−": "#f472b6",
+  "×": "#a78bfa",
+};
 
 const GRADES = [
   "Ayo berlatih lagi!",
@@ -39,13 +43,22 @@ const GRADES = [
   "Sempurna! 🎉",
 ];
 
+type QuestionResult = {
+  a: number;
+  b: number;
+  op: string;
+  answer: number;
+  userAnswer: number;
+  correct: boolean;
+};
+
 export default function MathQuiz() {
   const [inputs, setInputs] = useState(Array(6).fill(""));
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<QuestionResult[] | null>(null);
 
   const allFilled = inputs.every((v) => v.trim() !== "");
 
-  const handleChange = (i, val) => {
+  const handleChange = (i: number, val: string) => {
     if (result) return;
     setInputs((prev) => {
       const next = [...prev];
